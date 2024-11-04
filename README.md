@@ -53,3 +53,6 @@ QUEUE SIZE: 1000000
 The example above is a blocking data structure. This can result in increased latency as a result of the thread switching that occurs when a thread is blocked.
 
 When we want to write an element we use a lock preventing other threads from gaining access. An issue that can arise with this is if our thread gets suspended and we don't release the lock, the other thread will still be stuck waiting.
+TIME TAKEN: 5143809
+TIME TAKEN: 5214764
+TIME TAKEN: 5248978
