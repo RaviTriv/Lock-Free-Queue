@@ -56,3 +56,8 @@ When we want to write an element we use a lock preventing other threads from gai
 TIME TAKEN: 5143809
 TIME TAKEN: 5214764
 TIME TAKEN: 5248978
+
+LOCK FREE QUEUE
+TIME TAKEN: 5096014
+TIME TAKEN: 5045408
+TIME TAKEN: 5091301
