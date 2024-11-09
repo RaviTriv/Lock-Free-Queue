@@ -27,7 +27,7 @@ QUEUE SIZE: 999913
 QUEUE SIZE: 999897
 ```
 
-The expectation is that our program ouputs 1000000, but thats not happening.
+The expectation is that our program ouputs `QUEUE SIZE: 1000000`, but thats not happening.
 
 Our `enqueue` operation looks like the following
 ```c++
@@ -37,7 +37,9 @@ void enqueue(int val){
 }
 ```
 
-If `size=21` and we have two threads, `x` and `y` running. `x` can read 20 and increment it to 21, but before it's written to memory `y` will have read and recieved the value `20` it will also increment to `21`. We need make sure our value is synchronized to prevent this.
+If `size=21` and we have two threads, `x` and `y` running. `x` can read `21` and increment it to `22`, but before it's written to memory `y` will have read and recieved the value `21` it will also increment to `21`. This is called a `data race`.
+
+We need make sure our value is synchronized to prevent this. 
 
 # Mutex lock 
 A simple way to implement synchronization is via a `mutex lock`. We simply wrap the `critical section` with a `lock` statement prior to execution and an `unlock` after it completes execution.
