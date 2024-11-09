@@ -1,7 +1,56 @@
-### Lock Free Queue
+# Lock Free Queue
 
-Simple lock free queue to reduce latency.
+A simple thread safe non-blocking queue.
 
+## Why is this necessary
+When multiple threads are writing and reading to a data structure thread safety is important to ensure our program works as expected.
+
+A simple example can illustrate this.
+```c++
+void qHelper(Queue *q)
+{
+  q->enqueue(21);
+}
+
+for(int i = 0; i < 1000000; i++){
+  thread t1(qHelper);
+  t1.detach();
+}
+printf("QUEUE SIZE: %d\n", q->size);
+```
+
+Running the program three times the following is outputted.
+
+```
+QUEUE SIZE: 999876
+QUEUE SIZE: 999913
+QUEUE SIZE: 999897
+```
+
+The expectation is that our program ouputs 1000000, but thats not happening.
+
+Our `enqueue` operation looks like the following
+```c++
+void enqueue(int val){
+  //Add item to queue
+  size++;
+}
+```
+
+If `size=21` and we have two threads, `x` and `y` running. `x` can read 20 and increment it to 21, but before it's written to memory `y` will have read and recieved the value `20` it will also increment to `21`. We need make sure our value is synchronized to prevent this.
+
+# Mutex lock 
+A simple way to implement synchronization is via a `mutex lock`. We simply wrap the `critical section` with a `lock` statement prior to execution and an `unlock` after it completes execution.
+```c++
+mutex m;
+void enqueue(int val){
+  m.lock()
+  //Operation to add new element to our queue
+  m.unlock()
+}
+```
+If our `mutex` is locked our thread will become blocked, switch over to another task and check back later to see if the `mutex` is unlocked. The `thread` switching can increase latency in our program.
+## Blocking vs Non-Blocking Queue
 Typically a lock is used for synchronization in data structures, this can be a bottleneck for parallel programs.
 
 Synchorinzation is necessary for thread safe queues, a simple example of a non thread safe queue can illustrate this.
@@ -73,3 +122,5 @@ TIME TAKEN: 5096014
 TIME TAKEN: 5045408
 TIME TAKEN: 5091301
 ```
+
+`g++ main.cpp -o temp --std=c++11`
