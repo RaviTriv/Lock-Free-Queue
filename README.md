@@ -67,9 +67,9 @@ QUEUE SIZE: 1000000
 The downside of this is the `thread switching` can increase latency in our program.
 
 ### Atomic operations
-Another approach for thread safety is using `atomics`. Essentially these are special hardware instructions that execute without interruption. 
+Another approach for thread safety is using `atomics`. Essentially these are special hardware instructions that execute without interruption. This is the foundation of lock free data structures.
 
-`Compare and Swap` can be used to check if our value is correct based on when we fetched it. If it is only then we update the value. Otherwise we will fetch and repeat until the value is what is expected.
+`Compare and Swap` is an atomic operation that can be used to check if our value is correct based on when we fetched it. If it is only then we update the value. Otherwise we will fetch and repeat until the value is what is expected.
 
 ```c++
 Node* newNode = Node(value, nullptr);
