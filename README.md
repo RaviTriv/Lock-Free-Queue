@@ -41,6 +41,7 @@ If `size=21` and we have two threads, `x` and `y` running. `x` can read `21` and
 
 ![Concurrency Issue](/images/problem.png)
 
+## Synchronization
 We need make sure our value is synchronized to prevent this. 
 
 ### Mutex lock 
@@ -88,7 +89,6 @@ QUEUE SIZE: 1000000
 
 Very rough benchmarks.
 
-
 # Mutex Lock Queue
 ```
 TIME TAKEN: 5143809
@@ -104,7 +104,8 @@ TIME TAKEN: 5045408
 TIME TAKEN: 5091301
 ```
 
-
+## How to run
+`g++ main.cpp -o temp --std=c++11`
 
 ## Blocking vs Non-Blocking Queue
 Typically a lock is used for synchronization in data structures, this can be a bottleneck for parallel programs.
@@ -179,7 +180,6 @@ TIME TAKEN: 5045408
 TIME TAKEN: 5091301
 ```
 
-## How to run
-`g++ main.cpp -o temp --std=c++11`
+
 
 ## Rough Benchmarks
